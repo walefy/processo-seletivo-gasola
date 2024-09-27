@@ -3,6 +3,7 @@ import { Word } from '../types/word.js'
 import { loadWordListCsv } from '../helpers/wordlist_helper.js'
 import { errors } from '@adonisjs/auth'
 import EmptyWordException from '#exceptions/empty_word_exception'
+import { DEFAULT_USER_LIFE } from '../constants.js'
 
 export default class WordsController {
   private static words: Word[] = loadWordListCsv()
@@ -14,6 +15,7 @@ export default class WordsController {
     if (!user) throw errors.E_INVALID_CREDENTIALS
 
     user.currentWord = word.name
+    user.currentLife = DEFAULT_USER_LIFE
     await user.save()
 
     return response.ok({ length: word.name.length })
@@ -30,7 +32,19 @@ export default class WordsController {
       if (curr === letter) return [...acc, index]
       return acc
     }, [] as number[])
-    return response.ok({ includes: indexArray.length !== 0, indexArray })
+
+    const includes = indexArray.length !== 0
+
+    if (!includes) {
+      user.currentLife = user.currentLife - 1
+      user.save()
+    }
+
+    if (user.currentLife <= 0) {
+      return response.ok({ gameOver: true, word: user.currentWord })
+    }
+
+    return response.ok({ gameOver: false, includes, indexArray, life: user.currentLife })
   }
 
   private pickRandomWord() {

@@ -1,6 +1,6 @@
 ### Variables
 # Generate a token and set it here
-@token = oat_Nw.WFZFbE4wMk5vMnRwOGk5N05VdHNFay1oZWg0R09LdzQ3bzZzMVBGTzE4MzM1MTA1MTY
+@token = oat_OA.T01nVVR0SGQ2bGZZSXpUTDZFd0tzTWRLREIyM3JWV0RJbW9SeU9pRzI5ODE1MjMzODI
 
 ### Generate a word
 POST http://localhost:3333/word

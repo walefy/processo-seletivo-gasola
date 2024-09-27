@@ -7,10 +7,13 @@
 |
 */
 
+const UsersController = () => import('#controllers/users_controller')
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async () => {
   return {
-    hello: 'world',
+    healthy: true,
   }
 })
+
+router.post('user', [UsersController, 'create'])

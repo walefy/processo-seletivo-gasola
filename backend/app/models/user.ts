@@ -1,6 +1,6 @@
+import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import hash from '@adonisjs/core/services/hash'
 import { BaseModel, beforeSave, column } from '@adonisjs/lucid/orm'
-import { DEFAULT_USER_LIFE } from '../constants.js'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -15,10 +15,10 @@ export default class User extends BaseModel {
   @column()
   declare name: string
 
-  @column({ columnName: 'current_word', consume: (value) => value ?? '' })
-  declare currentWord: string
+  @column({ columnName: 'current_word' })
+  declare currentWord: string | null
 
-  @column({ columnName: 'current_life', consume: (value) => value ?? DEFAULT_USER_LIFE })
+  @column({ columnName: 'current_life' })
   declare currentLife: number
 
   @beforeSave()
@@ -27,4 +27,12 @@ export default class User extends BaseModel {
       user.password = await hash.make(user.password)
     }
   }
+
+  static accessTokens = DbAccessTokensProvider.forModel(User, {
+    expiresIn: '30 days',
+    prefix: 'oat_',
+    table: 'auth_access_tokens',
+    type: 'auth_token',
+    tokenSecretLength: 40,
+  })
 }

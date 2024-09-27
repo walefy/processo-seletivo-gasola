@@ -10,6 +10,6 @@ export default class UsersController {
     const user = await User.create(payload)
     const accessToken = await User.accessTokens.create(user)
 
-    return { token: accessToken.toJSON().token }
+    return { token: accessToken.value!.release() }
   }
 }

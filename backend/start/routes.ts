@@ -8,7 +8,9 @@
 */
 
 const UsersController = () => import('#controllers/users_controller')
+const WordsController = () => import('#controllers/words_controller')
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
 
 router.get('/', async () => {
   return {
@@ -22,3 +24,10 @@ router
     router.post('/login', [UsersController, 'login'])
   })
   .prefix('user')
+
+router
+  .group(() => {
+    router.post('/', [WordsController, 'generate'])
+  })
+  .prefix('word')
+  .middleware(middleware.auth())

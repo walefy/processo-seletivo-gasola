@@ -43,6 +43,7 @@
     "@swc/core": "^1.7.22",
     "@types/luxon": "^3.4.2",
     "@types/node": "^22.5.1",
+    "@types/papaparse": "^5.3.14",
     "eslint": "^9.9.1",
     "hot-hook": "^0.2.6",
     "pino-pretty": "^11.2.2",
@@ -58,6 +59,7 @@
     "@vinejs/vine": "^2.1.0",
     "luxon": "^3.5.0",
     "mysql2": "^3.11.3",
+    "papaparse": "^5.4.1",
     "reflect-metadata": "^0.2.2"
   },
   "hotHook": {

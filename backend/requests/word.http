@@ -1,0 +1,4 @@
+### Generate a word
+POST http://localhost:3333/word
+Content-Type: application/json
+Authorization: Bearer oat_Nw.WFZFbE4wMk5vMnRwOGk5N05VdHNFay1oZWg0R09LdzQ3bzZzMVBGTzE4MzM1MTA1MTY

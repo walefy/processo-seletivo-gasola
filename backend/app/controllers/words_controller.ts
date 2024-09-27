@@ -18,7 +18,7 @@ export default class WordsController {
     user.currentLife = DEFAULT_USER_LIFE
     await user.save()
 
-    return response.ok({ length: word.name.length })
+    return response.ok({ length: word.name.length, tip: word.tip })
   }
 
   async verifyLetter({ auth, request, response }: HttpContext) {

@@ -28,6 +28,7 @@ router
 router
   .group(() => {
     router.post('/', [WordsController, 'generate'])
+    router.get('/', [WordsController, 'verifyLetter'])
   })
   .prefix('word')
   .middleware(middleware.auth())

@@ -1,4 +1,3 @@
-import User from '#models/user'
 import vine from '@vinejs/vine'
 
 export const createUserValidator = vine.compile(
@@ -7,10 +6,17 @@ export const createUserValidator = vine.compile(
     email: vine
       .string()
       .email()
-      .unique(async (_, value, __) => {
-        const userFound = await User.findBy({ email: value })
-        return userFound === null
+      .unique(async (db, value) => {
+        const user = await db.from('users').where('email', value).first()
+        return !user
       }),
     password: vine.string().minLength(6).maxLength(16),
+  })
+)
+
+export const loginUserValidator = vine.compile(
+  vine.object({
+    email: vine.string().email(),
+    password: vine.string(),
   })
 )

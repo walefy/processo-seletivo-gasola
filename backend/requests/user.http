@@ -4,6 +4,15 @@ Content-Type: application/json
 
 {
   "name": "Test",
-  "email": "test5@test.com",
+  "email": "test@test.com",
+  "password": "123456"
+}
+
+### Login
+POST http://localhost:3333/user/login
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
   "password": "123456"
 }

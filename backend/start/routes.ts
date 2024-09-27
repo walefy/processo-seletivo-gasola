@@ -16,4 +16,9 @@ router.get('/', async () => {
   }
 })
 
-router.post('user', [UsersController, 'create'])
+router
+  .group(() => {
+    router.post('/', [UsersController, 'create'])
+    router.post('/login', [UsersController, 'login'])
+  })
+  .prefix('user')

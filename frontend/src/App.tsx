@@ -1,5 +1,7 @@
+import { Login } from './screens/Login'
+
 function App() {
-  return <p>hi...</p>
+  return <Login />
 }
 
 export default App

@@ -2,7 +2,8 @@ import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
-import { BaseModel, beforeSave, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { DEFAULT_USER_LIFE } from '../constants.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -25,15 +26,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column({ columnName: 'current_word' })
   declare currentWord: string | null
 
-  @column({ columnName: 'current_life' })
+  @column({ columnName: 'current_life', consume: (value) => value ?? DEFAULT_USER_LIFE })
   declare currentLife: number
-
-  @beforeSave()
-  static async hashPassword(user: User) {
-    if (user.$dirty.password) {
-      user.password = await hash.make(user.password)
-    }
-  }
 
   static accessTokens = DbAccessTokensProvider.forModel(User, {
     expiresIn: '30 days',

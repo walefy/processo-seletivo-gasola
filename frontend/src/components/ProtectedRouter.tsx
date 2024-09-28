@@ -7,14 +7,14 @@ type ProtectedRouterProps = {
 }
 
 export function ProtectedRouter({ children }: ProtectedRouterProps) {
-  const { user, token } = useContext(UserContext)
+  const { token } = useContext(UserContext)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!token || !user) {
+    if (!token) {
       navigate('/')
     }
-  }, [token, user, navigate])
+  }, [token, navigate])
 
   return <>{children}</>
 }

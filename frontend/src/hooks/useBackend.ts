@@ -32,8 +32,24 @@ export const useBackend = () => {
     };
   }
 
+  const generateWord = async (token: string) => {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/word`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+      method: 'POST'
+    });
+
+    const data = await response.json();
+    
+    return {
+      success: response.ok,
+      length: data.length,
+      tip: data.tip
+    };
+  }
+
   return {
     getToken,
-    getUserInfo
+    getUserInfo,
+    generateWord
   }
 }

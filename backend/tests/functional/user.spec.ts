@@ -55,11 +55,7 @@ test.group('User', (group) => {
 
     loginResponse.assertStatus(400)
     loginResponse.assertBody({
-      errors: [
-        {
-          message: 'Invalid user credentials',
-        },
-      ],
+      message: 'Invalid user credentials',
     })
   })
 
@@ -73,11 +69,7 @@ test.group('User', (group) => {
 
     loginResponse.assertStatus(400)
     loginResponse.assertBody({
-      errors: [
-        {
-          message: 'Invalid user credentials',
-        },
-      ],
+      message: 'Invalid user credentials',
     })
   })
 

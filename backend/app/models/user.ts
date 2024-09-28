@@ -23,7 +23,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare name: string
 
-  @column({ columnName: 'current_word' })
+  @column({ columnName: 'current_word', serializeAs: null })
   declare currentWord: string | null
 
   @column({ columnName: 'current_life', consume: (value) => value ?? DEFAULT_USER_LIFE })

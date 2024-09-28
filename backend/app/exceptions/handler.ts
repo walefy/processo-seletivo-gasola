@@ -1,6 +1,7 @@
 import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 import EmptyWordException from './empty_word_exception.js'
+import { errors } from '@adonisjs/auth'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -16,6 +17,10 @@ export default class HttpExceptionHandler extends ExceptionHandler {
   async handle(error: unknown, ctx: HttpContext) {
     if (error instanceof EmptyWordException) {
       return ctx.response.status(error.status).send({ message: error.message })
+    }
+
+    if (error instanceof errors.E_INVALID_CREDENTIALS) {
+      return ctx.response.status(400).send({ message: 'Invalid user credentials' })
     }
 
     return super.handle(error, ctx)

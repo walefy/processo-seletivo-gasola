@@ -1,3 +1,6 @@
+### Variables
+@token = oat_OA.VkVfcmVWbEhlTE0wajRMT3FpX3R4dlBGWkJsY3hzM21YQS1yaEEybzIyMjU1Mzc1
+
 ### Create user
 POST http://localhost:3333/user
 Content-Type: application/json
@@ -16,3 +19,8 @@ Content-Type: application/json
   "email": "test@test.com",
   "password": "123456"
 }
+
+### Get user info
+GET http://localhost:3333/user/info
+Authorization : Bearer {{token}}
+Content-Type: application/json

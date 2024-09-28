@@ -13,6 +13,12 @@ export default class UsersController {
     return response.created({ token: accessToken.value!.release() })
   }
 
+  async getInfo({ auth, response }: HttpContext) {
+    const user = auth.user!
+
+    return response.ok(user)
+  }
+
   async login({ request, response }: HttpContext) {
     const data = request.all()
     const { email, password } = await loginUserValidator.validate(data)

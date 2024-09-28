@@ -22,6 +22,7 @@ router
   .group(() => {
     router.post('/', [UsersController, 'create'])
     router.post('/login', [UsersController, 'login'])
+    router.get('/info', [UsersController, 'getInfo']).middleware(middleware.auth())
   })
   .prefix('user')
 

@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react'
 import { loginSchema } from '../../schemas/login_schema'
 import { schemaValidator } from '../../utils/schemaValidator'
+import { useBackend } from '../../hooks/useBackend'
+import { TOKEN_KEY } from '../../constants'
+import { useNavigate } from 'react-router-dom'
 
 export const useLogin = () => {
   const emailRef = useRef<HTMLInputElement>(null)
@@ -10,14 +13,10 @@ export const useLogin = () => {
   const [errorMessageEmail, setErrorMessageEmail] = useState('')
   const [errorMessagePassword, setErrorMessagePassword] = useState('')
 
-  const validateFields = () => {
-    const emailEl = emailRef.current
-    const passwordEl = passwordRef.current
+  const { getToken } = useBackend();
+  const navigate = useNavigate();
 
-    if (!emailEl || !passwordEl) {
-      throw new Error('Input elements are missing')
-    }
-
+  const validateFields = (emailEl: HTMLInputElement, passwordEl: HTMLInputElement) => {
     const payload = schemaValidator(loginSchema, {
       email: emailEl.value,
       password: passwordEl.value
@@ -26,7 +25,7 @@ export const useLogin = () => {
     if (!payload) {
       setIsErroredEmail(false)
       setIsErroredPassword(false)
-      return
+      return true
     }
 
     setIsErroredEmail(payload['email'] !== undefined)
@@ -34,14 +33,34 @@ export const useLogin = () => {
 
     setIsErroredPassword(payload['password'] !== undefined)
     setErrorMessagePassword(payload['password'] || '')
+    return false
   }
 
-  const handleLogin = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault()
 
-    validateFields()
-  }
+    const emailEl = emailRef.current
+    const passwordEl = passwordRef.current
 
+    if (!emailEl || !passwordEl) {
+      throw new Error('Input elements are missing')
+    }
+
+    const isValidFields = validateFields(emailEl, passwordEl)
+
+    if (!isValidFields) return
+
+    const payload = await getToken(emailEl.value, passwordEl.value)
+    
+    if (!payload.success) {
+      // TODO: trocar para um model mais bonito
+      alert('Email ou senha inválidos')
+      return
+    }
+
+    localStorage.setItem(TOKEN_KEY, payload.token)
+    navigate('/home')
+  }
 
   return {
     emailRef,

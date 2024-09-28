@@ -20,6 +20,6 @@ export default class UsersController {
     const user = await User.verifyCredentials(email, password)
     const accessToken = await User.accessTokens.create(user)
 
-    return response.created({ token: accessToken.value!.release() })
+    return response.ok({ token: accessToken.value!.release() })
   }
 }

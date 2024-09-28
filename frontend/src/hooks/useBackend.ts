@@ -10,8 +10,6 @@ export const useBackend = () => {
       body: JSON.stringify({ email, password })
     });
     const data = await response.json();
-
-    console.log(data)
     
     return {
       success: response.ok,
@@ -21,7 +19,7 @@ export const useBackend = () => {
   }
 
   const getUserInfo = async (token: string) => {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/info`, {
       headers: { 'Authorization': `Bearer ${token}` },
       method: 'GET'
     });
@@ -30,7 +28,7 @@ export const useBackend = () => {
     
     return {
       success: response.ok,
-      user: data.user
+      user: data
     };
   }
 

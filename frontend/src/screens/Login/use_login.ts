@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { loginSchema } from '../../schemas/login_schema'
 import { schemaValidator } from '../../utils/schemaValidator'
 import { useBackend } from '../../hooks/useBackend'
-import { TOKEN_KEY } from '../../constants'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../context/UserContext'
 
 export const useLogin = () => {
   const emailRef = useRef<HTMLInputElement>(null)
@@ -14,6 +14,7 @@ export const useLogin = () => {
   const [errorMessagePassword, setErrorMessagePassword] = useState('')
 
   const { getToken } = useBackend();
+  const { setToken } = useContext(UserContext);
   const navigate = useNavigate();
 
   const validateFields = (emailEl: HTMLInputElement, passwordEl: HTMLInputElement) => {
@@ -58,7 +59,7 @@ export const useLogin = () => {
       return
     }
 
-    localStorage.setItem(TOKEN_KEY, payload.token)
+    setToken(payload.token)
     navigate('/home')
   }
 

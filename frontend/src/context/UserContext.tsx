@@ -13,6 +13,7 @@ export function UserContextProvider({ children }: { children: React.ReactNode })
   const setToken = (token: string) => {
     localStorage.setItem(TOKEN_KEY, token)
     setLocalToken(token)
+    updateUserData(token)
   }
 
   const clearToken = () => {

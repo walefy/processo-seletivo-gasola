@@ -5,7 +5,7 @@ import db from '@adonisjs/lucid/services/db'
 import { test } from '@japa/runner'
 import { DEFAULT_USER_LIFE } from '../../app/constants.js'
 
-test.group('User create', (group) => {
+test.group('User', (group) => {
   group.each.setup(() => testUtils.db().withGlobalTransaction())
 
   test('Test if user returns token correctly', async ({ assert, client }) => {

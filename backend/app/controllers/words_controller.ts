@@ -23,7 +23,8 @@ export default class WordsController {
 
   async verifyLetter({ auth, request, response }: HttpContext) {
     const { user } = auth
-    const { letter } = request.qs()
+    const { letter: letterCaseSensitive } = request.qs()
+    const letter = letterCaseSensitive.toLowerCase()
 
     if (!user) throw errors.E_INVALID_CREDENTIALS
     if (!user.currentWord) throw new EmptyWordException()

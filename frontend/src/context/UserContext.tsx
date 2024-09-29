@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react'
-import { User, UserContextType } from '../types/user_context'
+import { User, UserContextType } from '../types/UserContext'
 import { TOKEN_KEY } from '../constants'
 import { useBackend } from '../hooks/useBackend'
 

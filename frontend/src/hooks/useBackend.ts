@@ -1,4 +1,5 @@
-import { GetTokenReturn } from '../types/get_token_return'
+import { GetTokenReturn } from '../types/GetTokenReturn'
+import { VerifyLetterReturn } from '../types/VerifyLetterReturn'
 
 export const useBackend = () => {
   const getToken = async (email: string, password: string): Promise<GetTokenReturn> => {
@@ -47,7 +48,7 @@ export const useBackend = () => {
     }
   }
 
-  const verifyLetter = async (token: string, letter: string) => {
+  const verifyLetter = async (token: string, letter: string): Promise<VerifyLetterReturn> => {
     const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/word?letter=${letter}`, {
       headers: { 'Authorization': `Bearer ${token}` },
       method: 'GET',
@@ -60,7 +61,8 @@ export const useBackend = () => {
       includes: data.includes,
       indexArray: data.indexArray,
       life: data.life,
-      gameOver: data.gameOver
+      gameOver: data.gameOver,
+      word: data.word
     }
   }
 

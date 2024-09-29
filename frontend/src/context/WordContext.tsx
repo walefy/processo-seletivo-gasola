@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react'
-import { WordContextType } from '../types/word_context_type'
+import { WordContextType } from '../types/WordContextType'
 
 export const WordContext = createContext({} as WordContextType)
 

@@ -1,12 +1,24 @@
 import { Header } from '../../components/Header'
-import { useHome } from './use_home'
+import { useHome } from './useHome'
 import { LetterCard } from '../../components/LetterCard'
 import { AlphabetButton } from '../../components/AlphabetButton'
+import { GameOverModal } from '../../components/GameOverModal'
+import { VictoryModal } from '../../components/VictoryModel'
 
 export function Home() {
-  const { wordLength, alphabet, letters, guessedLetters, handleGuess } = useHome()
+  const {
+    wordLength,
+    alphabet,
+    letters,
+    guessedLetters,
+    gameOver,
+    victory,
+    correctWord,
+    handleGuess,
+    playAgain,
+    clearToken
+  } = useHome()
 
-  // TODO: Adicionar uma animação de loading enquanto a palavra é gerada
   if (!letters) return null
 
   return (
@@ -33,6 +45,19 @@ export function Home() {
           ))}
         </div>
       </section>
+
+      <GameOverModal
+        isOpen={gameOver}
+        onPlayAgain={playAgain}
+        onExit={clearToken}
+        correctWord={correctWord}
+      />
+
+      <VictoryModal
+        isOpen={victory}
+        onPlayAgain={playAgain}
+        onExit={clearToken}
+      />
     </div>
   )
 }

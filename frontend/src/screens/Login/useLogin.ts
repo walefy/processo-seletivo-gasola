@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react'
-import { loginSchema } from '../../schemas/login_schema'
+import { loginSchema } from '../../schemas/loginSchema'
 import { schemaValidator } from '../../utils/schemaValidator'
 import { useBackend } from '../../hooks/useBackend'
 import { useNavigate } from 'react-router-dom'
@@ -8,6 +8,7 @@ import { UserContext } from '../../context/UserContext'
 export const useLogin = () => {
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
+  const [isAuthErrorModalOpen, setIsAuthErrorModalOpen] = useState(false)
   const [isErroredEmail, setIsErroredEmail] = useState(false)
   const [isErroredPassword, setIsErroredPassword] = useState(false)
   const [errorMessageEmail, setErrorMessageEmail] = useState('')
@@ -54,13 +55,16 @@ export const useLogin = () => {
     const payload = await getToken(emailEl.value, passwordEl.value)
     
     if (!payload.success) {
-      // TODO: trocar para um model mais bonito
-      alert('Email ou senha inválidos')
+      setIsAuthErrorModalOpen(true)
       return
     }
 
     setToken(payload.token)
     navigate('/home')
+  }
+
+  const closeAuthErrorModal = () => {
+    setIsAuthErrorModalOpen(false)
   }
 
   return {
@@ -70,6 +74,8 @@ export const useLogin = () => {
     isErroredPassword,
     errorMessageEmail,
     errorMessagePassword,
+    isAuthErrorModalOpen,
+    closeAuthErrorModal,
     handleLogin
   }
 }

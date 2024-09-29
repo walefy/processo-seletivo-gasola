@@ -18,10 +18,8 @@ export function LetterCard({ letter, isRevealed }: LetterCardProps) {
         : 'bg-blue-700 border-blue-800 text-transparent'
       }
     `}>
-      <If condition={isRevealed}>
-        <If condition={!!letter}>
-          {letter!.toUpperCase()}
-        </If>
+      <If condition={isRevealed && !!letter}>
+        {letter!.toUpperCase()}
       </If>
     </div>
   )

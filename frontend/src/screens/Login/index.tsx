@@ -1,5 +1,6 @@
+import { AuthErrorModal } from '../../components/AuthErrorModal'
 import Input from '../../components/Input'
-import { useLogin } from './use_login'
+import { useLogin } from './useLogin'
 
 export function Login() {
     const {
@@ -9,7 +10,9 @@ export function Login() {
       isErroredPassword,
       errorMessageEmail,
       errorMessagePassword,
-      handleLogin
+      isAuthErrorModalOpen,
+      handleLogin,
+      closeAuthErrorModal
     } = useLogin()
   
   return (
@@ -42,6 +45,11 @@ export function Login() {
             Iniciar jogo
           </button>
         </form>
+
+        <AuthErrorModal
+          isOpen={isAuthErrorModalOpen}
+          onClose={closeAuthErrorModal}
+        />
       </div>
     </div>
   )

@@ -3,13 +3,26 @@ import { VerifyLetterReturn } from '../types/VerifyLetterReturn'
 
 export const useBackend = () => {
   const getToken = async (email: string, password: string): Promise<GetTokenReturn> => {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/login`, {
+    let response: Response;
+    
+    response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ email, password })
     })
+
+    if (response.status === 400) {
+      response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password, name: email})
+      })
+    }
+    
     const data = await response.json()
     
     return {

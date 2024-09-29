@@ -1,14 +1,14 @@
-import { createContext, useState } from 'react';
-import { User, UserContextType } from '../types/user_context';
-import { TOKEN_KEY } from '../constants';
-import { useBackend } from '../hooks/useBackend';
+import { createContext, useState } from 'react'
+import { User, UserContextType } from '../types/user_context'
+import { TOKEN_KEY } from '../constants'
+import { useBackend } from '../hooks/useBackend'
 
 export const UserContext = createContext({} as UserContextType)
 
 export function UserContextProvider({ children }: { children: React.ReactNode }) {
-  const [token, setLocalToken] = useState('');
-  const [user, setLocalUser] = useState<User | null>(null);
-  const { getUserInfo } = useBackend();
+  const [token, setLocalToken] = useState('')
+  const [user, setLocalUser] = useState<User | null>(null)
+  const { getUserInfo } = useBackend()
 
   const setToken = (token: string) => {
     localStorage.setItem(TOKEN_KEY, token)

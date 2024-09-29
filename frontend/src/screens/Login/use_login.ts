@@ -13,9 +13,9 @@ export const useLogin = () => {
   const [errorMessageEmail, setErrorMessageEmail] = useState('')
   const [errorMessagePassword, setErrorMessagePassword] = useState('')
 
-  const { getToken } = useBackend();
-  const { setToken } = useContext(UserContext);
-  const navigate = useNavigate();
+  const { getToken } = useBackend()
+  const { setToken } = useContext(UserContext)
+  const navigate = useNavigate()
 
   const validateFields = (emailEl: HTMLInputElement, passwordEl: HTMLInputElement) => {
     const payload = schemaValidator(loginSchema, {
